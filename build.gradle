@@ -12,6 +12,7 @@ sonarqube {
 		property "sonar.projectKey", "SantiagoCardenasFranco_BackendAppwebIng3"
 		property "sonar.organization", "santiagocardenasfranco"
 		property "sonar.host.url", "https://sonarcloud.io"
+
 	}
 }
 
