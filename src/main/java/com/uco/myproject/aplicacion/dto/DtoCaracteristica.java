@@ -15,10 +15,10 @@ public class DtoCaracteristica {
     public DtoCaracteristica() {
     }
 
-    public DtoCaracteristica(String marca, String descripcion, DtoTamano dtoTamano, String proveedor) {
+    public DtoCaracteristica(String marca, String descripcion, DtoTamano tamano, String proveedor) {
         this.marca = marca;
         this.descripcion = descripcion;
-        this.dtoTamano = dtoTamano;
+        this.dtoTamano = tamano;
         this.proveedor = proveedor;
     }
 }

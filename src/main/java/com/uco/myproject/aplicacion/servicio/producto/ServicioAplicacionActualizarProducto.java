@@ -6,7 +6,6 @@ import com.uco.myproject.dominio.modelo.*;
 import com.uco.myproject.dominio.servicio.producto.ServicioActualizarProducto;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

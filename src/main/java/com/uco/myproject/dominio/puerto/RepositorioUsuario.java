@@ -13,5 +13,5 @@ public interface RepositorioUsuario {
     Boolean eliminar(Long id);
     Boolean actualizar(Long id, Usuario usuario);
     Usuario consultar(String usuario, String clave);
-    Usuario consultarPorId(Long id);
+    DtoUsuarioResumen consultarPorId(Long id);
 }

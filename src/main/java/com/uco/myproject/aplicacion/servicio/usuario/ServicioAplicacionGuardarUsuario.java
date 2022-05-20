@@ -32,6 +32,8 @@ public class ServicioAplicacionGuardarUsuario {
         Usuario usuario = Usuario.of(dto.getNombre(), dto.getApellido(), dto.getCorreo(),
                 dto.getPassword(), roles);
 
+        ValidadorAtributos.implemetacionCaracteresEspecialesPassword(dto.getPassword(), "La contaseña tiene unas reglas de escritura");
+
         String claveCifrada = this.servicioCifrarTexto.ejecutar(usuario.getPassword());
         usuario.asignarClaveCifrada(claveCifrada);
 

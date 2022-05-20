@@ -33,6 +33,7 @@ public class ControladorUsuario {
     }
 
     @GetMapping
+    @Secured(roles = {"EMPLEADO"})
     public List<DtoUsuarioResumen> listar() {
         return servicioAplicacionListarUsuario.ejecutar();
     }
@@ -43,11 +44,13 @@ public class ControladorUsuario {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Secured(roles = {"EMPLEADO"})
     public DtoRespuesta<Boolean> eliminar(@PathVariable Long id) {
         return this.servicioAplicacionEliminarUsuario.ejecutar(id);
     }
 
     @PutMapping(value = "/{id}")
+    @Secured(roles = {"EMPLEADO"})
     public DtoRespuesta<Boolean> actualizar(@PathVariable Long id, @RequestBody DtoUsuario dto){
         return this.servicioAplicacionActualizarUsuario.ejecutar(id,dto);
     }

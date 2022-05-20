@@ -7,6 +7,7 @@ import com.uco.myproject.aplicacion.servicio.caracteristica.ServicioAplicacionEl
 import com.uco.myproject.aplicacion.servicio.caracteristica.ServicioAplicacionGuardarCaracteristica;
 import com.uco.myproject.aplicacion.servicio.caracteristica.ServicioAplicacionListarCaracteristica;
 import com.uco.myproject.dominio.modelo.Caracteristica;
+import com.uco.myproject.infraestructura.aspecto.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,21 +30,25 @@ public class ControladorCaracteristica {
     }
 
     @GetMapping
+    @Secured(roles = "EMPLEADO")
     public List<Caracteristica> listar() {
         return servicioAplicacionListarCaracteristica.ejecutar();
     }
 
    @PostMapping
+   @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Long> crear(@RequestBody DtoCaracteristica dto) {
         return this.servicioAplicacionGuardarCaracteristica.ejecutar(dto);
     }
 
     @DeleteMapping(value = "/{id}")
+    @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Boolean> eliminar(@PathVariable Long id) {
         return this.servicioAplicacionEliminarCaracteristica.ejecutar(id);
     }
 
     @PutMapping(value = "/{id}")
+    @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Boolean> actualizar(@PathVariable Long id, @RequestBody DtoCaracteristica dto){
         return this.servicioAplicacionActualizarCaracteristica.ejecutar(id,dto);
     }

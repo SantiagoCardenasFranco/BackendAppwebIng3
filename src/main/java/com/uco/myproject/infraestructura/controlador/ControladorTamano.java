@@ -30,6 +30,7 @@ public class ControladorTamano {
     }
 
     @GetMapping
+    @Secured(roles = "EMPLEADO")
     public List<Tamano> listar() {
         return servicioAplicacionListarTamano.ejecutar();
     }
@@ -41,11 +42,13 @@ public class ControladorTamano {
     }
 
     @DeleteMapping(value = "/{id}")
+    @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Boolean> eliminar(@PathVariable Long id) {
         return this.servicioAplicacionEliminarTamano.ejecutar(id);
     }
 
     @PutMapping(value = "/{id}")
+    @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Boolean> actualizar(@PathVariable Long id, @RequestBody DtoTamano dto){
         return this.servicioAplicacionActualizarTamano.ejecutar(id,dto);
     }

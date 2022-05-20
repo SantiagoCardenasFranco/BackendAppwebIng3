@@ -1,10 +1,12 @@
 package com.uco.myproject.infraestructura.controlador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uco.myproject.aplicacion.dto.DtoLogin;
 import com.uco.myproject.aplicacion.dto.DtoProducto;
 import com.uco.myproject.aplicacion.dto.respuesta.DtoRespuesta;
 import com.uco.myproject.dominio.puerto.RepositorioProducto;
 import com.uco.myproject.infraestructura.ApplicationMock;
+import com.uco.myproject.infraestructura.testdatabuilder.DtoLoginTestDataBuilder;
 import com.uco.myproject.infraestructura.testdatabuilder.DtoProductoTestDataBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorProductoTest {
-
-    /*@Autowired
+/*
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -47,11 +49,14 @@ class ControladorProductoTest {
         // arrange
         var dto = new DtoProductoTestDataBuilder().build();
 
-        crear(dto);
+        String token = obtenerToken();
+
+        crear(dto, token);
 
         // act - assert
         mocMvc.perform(MockMvcRequestBuilders.post("/api/productos")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",token)
                         .content(objectMapper.writeValueAsString(dto))
                 )
                 .andExpect(status().isConflict());
@@ -64,16 +69,19 @@ class ControladorProductoTest {
 
         var dto = new DtoProductoTestDataBuilder().build();
 
-        crear(dto);
+        String token = obtenerToken();
+
+        crear(dto, token);
     }
 
-    private void crear(DtoProducto dto) throws Exception {
+    private void crear(DtoProducto dto, String token) throws Exception {
         // arrange
 
         // act
         var result = mocMvc.perform(MockMvcRequestBuilders.post("/api/productos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto))
+                        .header("Authorization",token)
                 )
                 .andExpect(status().isOk())
                 .andReturn();
@@ -98,5 +106,16 @@ class ControladorProductoTest {
         Assertions.assertEquals(dto.getDtoCaracteristica().getDtoTamano().getEspecificacion(), producto.getCaracteristica().getTamano().getEspecificacion());
         Assertions.assertEquals(dto.getDtoCaracteristica().getProveedor(), producto.getCaracteristica().getProveedor());
     }
-*/
+
+    private String obtenerToken() throws Exception {
+        DtoLogin login = new DtoLoginTestDataBuilder().build();
+        var resultLogin = mocMvc.perform(MockMvcRequestBuilders.post("/api/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(login))
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
+    }*/
 }

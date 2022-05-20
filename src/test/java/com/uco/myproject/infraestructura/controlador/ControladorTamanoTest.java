@@ -1,10 +1,12 @@
 package com.uco.myproject.infraestructura.controlador;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uco.myproject.aplicacion.dto.DtoLogin;
 import com.uco.myproject.aplicacion.dto.DtoTamano;
 import com.uco.myproject.aplicacion.dto.respuesta.DtoRespuesta;
 import com.uco.myproject.dominio.puerto.RepositorioTamano;
 import com.uco.myproject.infraestructura.ApplicationMock;
+import com.uco.myproject.infraestructura.testdatabuilder.DtoLoginTestDataBuilder;
 import com.uco.myproject.infraestructura.testdatabuilder.DtoTamanoTestDataBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorTamanoTest {
-/*
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -50,11 +52,14 @@ class ControladorTamanoTest {
         // arrange
         var dto = new DtoTamanoTestDataBuilder().build();
 
-        crear(dto);
+        String token = obtenerToken();
+
+        crear(dto, token);
 
         // act - assert
         mocMvc.perform(MockMvcRequestBuilders.post("/api/tamanos")
                         .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",token)
                         .content(objectMapper.writeValueAsString(dto))
                 )
                 .andExpect(status().isConflict());
@@ -67,16 +72,19 @@ class ControladorTamanoTest {
 
         var dto = new DtoTamanoTestDataBuilder().build();
 
-        crear(dto);
+        String token = obtenerToken();
+
+        crear(dto, token);
     }
 
-    private void crear(DtoTamano dto) throws Exception {
+    private void crear(DtoTamano dto, String token) throws Exception {
         // arrange
 
         // act
         var result = mocMvc.perform(MockMvcRequestBuilders.post("/api/tamanos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto))
+                        .header("Authorization",token)
                 )
                 .andExpect(status().isOk())
                 .andReturn();
@@ -100,14 +108,27 @@ class ControladorTamanoTest {
 
         var dto = new DtoTamanoTestDataBuilder().build();
 
-        crear(dto);
+        String token = obtenerToken();
+
+        crear(dto, token);
 
         mocMvc.perform(get("/api/tamanos")
-                        .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[1].nombre", is(dto.getNombre())))
                 .andExpect(jsonPath("$[1].especificacion", is(dto.getEspecificacion())));
     }
 
- */
+    private String obtenerToken() throws Exception {
+        DtoLogin login = new DtoLoginTestDataBuilder().build();
+        var resultLogin = mocMvc.perform(MockMvcRequestBuilders.post("/api/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(login))
+                )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
+    }
 }

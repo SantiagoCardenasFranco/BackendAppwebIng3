@@ -32,11 +32,13 @@ public class ControladorProducto {
     }
 
     @GetMapping
+    @Secured(roles = "EMPLEADO")
     public List<Producto> listar() {
         return servicioAplicacionListarProducto.ejecutar();
     }
 
    @PostMapping
+   @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Long> crear(@RequestBody DtoProducto dto) {
         return this.servicioAplicacionGuardarProducto.ejecutar(dto);
     }
@@ -48,6 +50,7 @@ public class ControladorProducto {
     }
 
     @PutMapping(value = "/{id}")
+    @Secured(roles = "EMPLEADO")
     public DtoRespuesta<Boolean> actualizar(@PathVariable Long id, @RequestBody DtoProducto dto){
         return this.servicioAplicacionActualizarProducto.ejecutar(id,dto);
     }

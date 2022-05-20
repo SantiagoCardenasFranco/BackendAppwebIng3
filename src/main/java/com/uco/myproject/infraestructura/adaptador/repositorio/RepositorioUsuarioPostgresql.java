@@ -80,17 +80,12 @@ public class RepositorioUsuarioPostgresql implements RepositorioUsuario {
     }
 
     @Override
-    public Usuario consultarPorId(Long id) {
-        Optional<EntidadUsuario> entidadUsuario = this.repositorioUsuarioJpa.findById(id);
-
-        List<RolUsuario> roles = entidadUsuario.
-                get().getRoles().stream().map(rol -> RolUsuario.of(rol.getRol())).collect(Collectors.toList());
-
+    public DtoUsuarioResumen consultarPorId(Long id) {
 
         return this.repositorioUsuarioJpa
                 .findById(id)
-                .map(entidad -> Usuario.of(entidad.getNombre(), entidad.getApellido(),
-                        entidad.getCorreo(), entidad.getPassword(), roles))
+                .map(entidad -> new DtoUsuarioResumen(entidad.getNombre(), entidad.getApellido(),
+                        entidad.getCorreo()))
                 .orElse(null);
     }
 }
