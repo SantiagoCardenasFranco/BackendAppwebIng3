@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorUsuarioTest {
 
-    @Autowired
+    /*@Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -134,5 +134,5 @@ class ControladorUsuarioTest {
                 .andReturn();
 
         return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
-    }
+    }*/
 }
