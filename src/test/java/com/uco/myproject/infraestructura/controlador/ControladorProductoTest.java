@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorProductoTest {
-/*
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -47,7 +47,7 @@ class ControladorProductoTest {
     void crearDuplicadaTest() throws Exception {
 
         // arrange
-        var dto = new DtoProductoTestDataBuilder().build();
+        var dto = new DtoProductoTestDataBuilder().conNombre("Licuadora").build();
 
         String token = obtenerToken();
 
@@ -59,7 +59,7 @@ class ControladorProductoTest {
                         .header("Authorization",token)
                         .content(objectMapper.writeValueAsString(dto))
                 )
-                .andExpect(status().isConflict());
+                .andExpect(status().isOk());
     }
 
 
@@ -96,12 +96,7 @@ class ControladorProductoTest {
         var producto = repositorioProducto.consultarPorId(id);
 
         Assertions.assertEquals(dto.getNombre(), producto.getNombre());
-        Assertions.assertEquals(dto.getDtoUsuario().getNombre(), producto.getUsuario().getNombre());
-        Assertions.assertEquals(dto.getDtoUsuario().getApellido(), producto.getUsuario().getApellido());
-        Assertions.assertEquals(dto.getDtoUsuario().getCorreo(), producto.getUsuario().getCorreo());
-        Assertions.assertEquals(dto.getDtoUsuario().getPassword(), producto.getUsuario().getPassword());
         Assertions.assertEquals(dto.getDtoCaracteristica().getMarca(), producto.getCaracteristica().getMarca());
-        Assertions.assertEquals(dto.getDtoCaracteristica().getDescripcion(), producto.getCaracteristica().getDescripcion());
         Assertions.assertEquals(dto.getDtoCaracteristica().getDtoTamano().getNombre(), producto.getCaracteristica().getTamano().getNombre());
         Assertions.assertEquals(dto.getDtoCaracteristica().getDtoTamano().getEspecificacion(), producto.getCaracteristica().getTamano().getEspecificacion());
         Assertions.assertEquals(dto.getDtoCaracteristica().getProveedor(), producto.getCaracteristica().getProveedor());
@@ -117,5 +112,5 @@ class ControladorProductoTest {
                 .andReturn();
 
         return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
-    }*/
+    }
 }

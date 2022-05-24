@@ -36,8 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorUsuarioTest {
 
-
-    /*
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -55,7 +53,7 @@ class ControladorUsuarioTest {
     void crearDuplicadaTest() throws Exception {
 
         // arrange
-        var dto = new DtoUsuarioTestDataBuilder().build();
+        var dto = new DtoUsuarioTestDataBuilder().conCorreo("cualquiercosa@gmail.com").build();
 
         String token = obtenerToken();
 
@@ -75,7 +73,7 @@ class ControladorUsuarioTest {
     @DisplayName("Debe crear un usuario de forma exitosa y validar que si quedó guardado")
     void crearTest() throws Exception {
 
-        var dto = new DtoUsuarioTestDataBuilder().build();
+        var dto = new DtoUsuarioTestDataBuilder().conCorreo("cualquiercosa@gmail.com").build();
 
         String token = obtenerToken();
 
@@ -136,5 +134,5 @@ class ControladorUsuarioTest {
                 .andReturn();
 
         return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
-    }*/
+    }
 }

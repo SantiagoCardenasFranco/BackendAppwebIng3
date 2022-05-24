@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorCaracteristicasTest {
-/*
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -47,7 +47,7 @@ class ControladorCaracteristicasTest {
     void crearDuplicadaTest() throws Exception {
 
         // arrange
-        var dto = new DtoCaracteristicaTestDataBuilder().build();
+        var dto = new DtoCaracteristicaTestDataBuilder().conMarca("Samsung").build();
 
 
         String token = obtenerToken();
@@ -67,7 +67,7 @@ class ControladorCaracteristicasTest {
     @DisplayName("Debe crear una caracteristica de forma exitosa y validar que si quedó guardado")
     void crearTest() throws Exception {
 
-        var dto = new DtoCaracteristicaTestDataBuilder().build();
+        var dto = new DtoCaracteristicaTestDataBuilder().conMarca("Samsung").build();
 
         String token = obtenerToken();
 
@@ -112,5 +112,5 @@ class ControladorCaracteristicasTest {
                 .andReturn();
 
         return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
-    }*/
+    }
 }

@@ -46,20 +46,12 @@ public class RepositorioProductoPostgresql implements RepositorioProducto {
     }
 
     @Override
-    public Producto consultarPorId(Long id) {
-        Optional<EntidadProducto> entidadProducto =  this.repositorioProductoJpa.findById(id);
-
-        List<RolUsuario> roles = entidadProducto.get().getEntidadUsuario().getRoles().stream().
-                map(rol -> RolUsuario.of(rol.getRol())).collect(Collectors.toList());
+    public DtoProductoResumen consultarPorId(Long id) {
 
 
         return this.repositorioProductoJpa
                 .findById(id)
-                .map(entidad -> Producto.of(entidad.getNombre(),
-                        Usuario.of(entidad.getEntidadUsuario().getNombre(),
-                                entidad.getEntidadUsuario().getApellido(),
-                                entidad.getEntidadUsuario().getCorreo(),
-                                entidad.getEntidadUsuario().getPassword(), roles),
+                .map(entidad -> new DtoProductoResumen(entidad.getNombre(),
                         Caracteristica.of(entidad.getEntidadCaracteristica().getMarca(),
                                 entidad.getEntidadCaracteristica().getDescripcion(),
                                 Tamano.of(entidad.getEntidadCaracteristica().getEntidadTamano().getNombre(),
