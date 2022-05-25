@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ControladorUsuarioTest {
 
-    /*@Autowired
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -48,7 +48,7 @@ class ControladorUsuarioTest {
     ControladorUsuarioTest() {
     }
 
-    @Test
+    /*@Test
     @DisplayName("Debe crear un usuario de forma exitosa y luego fallar al crear el mismo")
     void crearDuplicadaTest() throws Exception {
 
@@ -66,14 +66,14 @@ class ControladorUsuarioTest {
                         .content(objectMapper.writeValueAsString(dto))
                 )
                 .andExpect(status().isConflict());
-    }
+    }*/
 
 
     @Test
     @DisplayName("Debe crear un usuario de forma exitosa y validar que si quedó guardado")
     void crearTest() throws Exception {
 
-        var dto = new DtoUsuarioTestDataBuilder().conCorreo("cualquiercosa@gmail.com").build();
+        var dto = new DtoUsuarioTestDataBuilder().conApellido("CÃ¡rdenas").conCorreo("cualquiercosa@gmail.com").build();
 
         String token = obtenerToken();
 
@@ -106,7 +106,7 @@ class ControladorUsuarioTest {
         Assertions.assertEquals(dto.getCorreo(), usuario.getCorreo());
     }
 
-    @Test
+    /*@Test
     @DisplayName("Debe listar los usuarios luego de crearlos")
     void listarTest() throws Exception {
 
@@ -120,9 +120,8 @@ class ControladorUsuarioTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].nombre", is(dto.getNombre())))
-                .andExpect(jsonPath("$[0].correo", is(dto.getCorreo())));
-    }
+                .andExpect(jsonPath("$[0].nombre", is(dto.getNombre())));
+    }*/
 
     private String obtenerToken() throws Exception {
         DtoLogin login = new DtoLoginTestDataBuilder().build();
@@ -134,5 +133,5 @@ class ControladorUsuarioTest {
                 .andReturn();
 
         return (String) objectMapper.readValue(resultLogin.getResponse().getContentAsString(), DtoRespuesta.class).getValor();
-    }*/
+    }
 }

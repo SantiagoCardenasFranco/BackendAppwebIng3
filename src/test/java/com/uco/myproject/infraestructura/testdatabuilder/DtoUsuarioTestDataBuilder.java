@@ -13,7 +13,7 @@ public class DtoUsuarioTestDataBuilder {
 
     public DtoUsuarioTestDataBuilder() {
         this.nombre = "Santiago";
-        this.apellido = "Cárdenas";
+        this.apellido = "Cardenas";
         this.correo = "santicarfranco8@gmmail.com";
         this.password = "w3Unpo<code>t0d0";
     }

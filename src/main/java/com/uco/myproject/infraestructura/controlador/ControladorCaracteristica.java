@@ -30,7 +30,6 @@ public class ControladorCaracteristica {
     }
 
     @GetMapping
-    @Secured(roles = "EMPLEADO")
     public List<Caracteristica> listar() {
         return servicioAplicacionListarCaracteristica.ejecutar();
     }
