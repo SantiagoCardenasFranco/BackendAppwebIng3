@@ -30,13 +30,13 @@ public class ControladorTamano {
     }
 
     @GetMapping
-    @Secured(roles = "EMPLEADO")
+    @Secured(roles = {"EMPLEADO"})
     public List<Tamano> listar() {
         return servicioAplicacionListarTamano.ejecutar();
     }
 
     @PostMapping
-    @Secured(roles = "EMPLEADO")
+    @Secured(roles = {"EMPLEADO"})
     public DtoRespuesta<Long> crear(@RequestBody DtoTamano dto) {
         return this.servicioAplicacionGuardarTamano.ejecutar(dto);
     }

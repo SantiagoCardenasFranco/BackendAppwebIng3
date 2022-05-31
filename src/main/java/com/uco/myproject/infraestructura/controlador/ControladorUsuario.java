@@ -8,6 +8,8 @@ import com.uco.myproject.aplicacion.servicio.usuario.ServicioAplicacionGuardarUs
 import com.uco.myproject.aplicacion.servicio.usuario.ServicioAplicacionListarUsuario;
 import com.uco.myproject.dominio.dto.DtoUsuarioResumen;
 import com.uco.myproject.infraestructura.aspecto.Secured;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +42,7 @@ public class ControladorUsuario {
 
     @PostMapping
     public DtoRespuesta<Long> crear(@RequestBody DtoUsuario dto) {
+        //return ResponseEntity.status(HttpStatus.CREATED).body(this.servicioAplicacionGuardarUsuario.ejecutar(dto));
         return this.servicioAplicacionGuardarUsuario.ejecutar(dto);
     }
 
